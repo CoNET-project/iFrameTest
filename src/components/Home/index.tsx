@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button } from 'antd';
 import logo from '../../logo.svg';
-
+import {startWorker} from '@conet.project/seguro-worker-lib/build'
 const Start: React.FC = () => {
 
 
@@ -14,6 +14,19 @@ const Start: React.FC = () => {
   window.addEventListener('message', receiveMessageFromIndex, false);
 
   const [loginUserName, setLoginUserName] = React.useState<string>('');
+  
+	useEffect(() => {
+		const fetchData = async () => {
+			if (!active) {
+				return
+			}
+			const [status, container] = await startWorker()
+		}
+
+		let active = true
+		fetchData()
+		return () => { active = false }
+	}, [])
 
   return (
     <div>
